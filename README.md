@@ -1,26 +1,30 @@
-# ExpressGEO
+# ExpressoGEO
 
-`ExpressGEO` is an R package for downloading, normalizing, and annotating Affymetrix microarray data from GEO.
+`ExpressoGEO` is an R package for downloading, normalizing, and annotating Affymetrix microarray data from GEO.
 
 ## Installation
 
-1.  **Install `BiocManager`** (if you don't have it):
+1. **Install `remotes`** :
+    ```R
+    if (!requireNamespace("remotes", quietly = TRUE))
+        install.packages("remotes")
+    ```
+1.  **Install `BiocManager`** :
     ```R
     if (!requireNamespace("BiocManager", quietly = TRUE))
         install.packages("BiocManager")
     ```
 
-2.  **Install `ExpressGEO`**:
-    (Replace `YourGitHubUsername` with the actual GitHub username/organization)
+2.  **Install `ExpressoGEO`**
     ```R
-    BiocManager::install("zqzneptune/ExpressGEO")
+    remotes::install_github("zqzneptune/ExpressoGEO")
     ```
     *(This will also install required Bioconductor dependencies like `GEOquery`, `oligo`, `AnnotationHub`, etc.)*
 
 ## Quick Usage
 
 ```R
-library(ExpressGEO)
+library(ExpressoGEO)
 
 # Process a GEO Series (GSE). Replace "GSE12345" with a valid Affymetrix GSE.
 # Results (ExpressionSet) will be saved in a temporary directory by default.
