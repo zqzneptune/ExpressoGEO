@@ -1,0 +1,65 @@
+---
+title: "Using the ExpressoGEO Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the ExpressoGEO Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE # Set to TRUE to run examples when building vignette
+)
+library(ExpressoGEO)
+```
+
+## Introduction
+
+The `ExpressoGEO` package simplifies the process of downloading and analyzing Affymetrix microarray data from the Gene Expression Omnibus (GEO).
+
+## Basic Usage
+
+The main function is `process_gse()`. You need to provide a GSE accession number.
+
+```{r example_usage}
+# Ensure you have an internet connection.
+# This example uses a hypothetical GSE. Replace with a real one
+# that uses platforms supported by mbni.org custom CDFs.
+# gse_id_to_process <- "GSE_YOUR_EXAMPLE" # e.g., something using HuGene or MoGene
+
+# # Create a directory for output
+# output_location <- tempfile("geo_processed_")
+# dir.create(output_location)
+# 
+# # Process the GSE
+# eset <- process_gse(
+#   gse_accession = gse_id_to_process,
+#   output_dir = output_location 
+# )
+# 
+# if (!is.null(eset)) {
+#   print("Processing successful!")
+#   print(eset)
+# 
+#   # Clean up
+#   unlink(output_location, recursive = TRUE)
+# } else {
+#   print("Processing failed or no suitable platforms found.")
+# }
+```
+
+## Important Notes
+
+*   **Internet Connection:** This package requires an active internet connection to download data from GEO, AnnotationHub, and potentially custom CDFs.
+*   **Custom CDFs:** The package relies on custom CDFs from \url{http://mbni.org/customcdf/}. Not all Affymetrix platforms have corresponding Ensembl-gene based CDFs there. If a CDF is not found or fails to install, processing for that platform will be skipped.
+*   **Disk Space:** Downloading raw GEO data can consume significant disk space.
+*   **Time:** Processing can take a considerable amount of time, especially for large GSE series or if custom CDFs need to be downloaded and installed.
+
+## Troubleshooting
+
+*   **CDF Installation Fails:** Check the console messages. The required CDF might not be available at mbni.org, or there might be network issues. You might need to find an alternative CDF or annotation method for your specific platform.
+*   **AnnotationHub Issues:** Ensure `AnnotationHub` can access its cache and download resources.
+*   **CEL File Issues:** Sometimes, `supplementary_file` entries in GEO metadata are inconsistent. The function tries to locate CEL files in the extracted `_RAW.tar` archive, but mismatches can occur.

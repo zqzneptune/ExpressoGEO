@@ -1,0 +1,37 @@
+Package: ExpressoGEO
+Type: Package
+Title: Process Affymetrix Microarray Data from GEO
+Version: 0.0.0.9000
+Authors@R:
+    person(given = "Qingzhou",
+           family = "Zhang",
+           role = c("aut", "cre"),
+           email = "zqzneptune@gmail.com")
+Description: Provides functions to download, process, and annotate Affymetrix
+    microarray data from the Gene Expression Omnibus (GEO). It handles
+    downloading raw CEL files, installing custom CDF (Chip Definition File)
+    packages from mbni.org if needed, performing RMA normalization, and
+    annotating genes using Ensembl gene IDs via AnnotationHub.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+LazyData: true
+Imports:
+    GEOquery,
+    Biobase,
+    affyio,
+    affy,
+    oligo,
+    AnnotationHub,
+    ensembldb,
+    dplyr,
+    utils,
+    methods 
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    BiocManager   
+VignetteBuilder: knitr
+Depends: R (>= 4.0) 
