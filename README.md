@@ -13,7 +13,7 @@
 2.  **Install `ExpressGEO`**:
     (Replace `YourGitHubUsername` with the actual GitHub username/organization)
     ```R
-    BiocManager::install("YourGitHubUsername/ExpressGEO")
+    BiocManager::install("zqzneptune/ExpressGEO")
     ```
     *(This will also install required Bioconductor dependencies like `GEOquery`, `oligo`, `AnnotationHub`, etc.)*
 
