@@ -23,8 +23,7 @@
     ```R
     remotes::install_github("zqzneptune/ExpressoGEO")
     ```
-    *(This will also install required Bioconductor dependencies like `GEOquery`, `oligo`, `AnnotationHub`, etc.)*
-
+    
 ## Quick Usage
 
 ```R
