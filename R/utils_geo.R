@@ -1,5 +1,37 @@
 # R/utils_geo.R
 
+#' Validate and Normalize Path
+#'
+#' Checks if path exists and normalizes it
+#' @param path Path to validate
+#' @param must_exist Whether path must exist (default: FALSE)
+#' @return Normalized path
+#' @keywords internal
+validate_path <- function(path, must_exist = FALSE) {
+  if (!is.character(path) || length(path) != 1) {
+    stop("Path must be a single character string")
+  }
+  path <- normalizePath(path, mustWork = FALSE)
+  if (must_exist && !file.exists(path)) {
+    stop("Path does not exist: ", path)
+  }
+  return(path)
+}
+
+#' Create Directory if Needed
+#'
+#' Creates directory if it doesn't exist
+#' @param path Directory path
+#' @return Normalized path
+#' @keywords internal
+ensure_dir <- function(path) {
+  path <- validate_path(path, must_exist = FALSE)
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+  }
+  return(path)
+}
+
 #' Generate GEO Prefix
 #'
 #' Creates a prefix string for constructing GEO FTP paths.
@@ -34,17 +66,28 @@ get_geo_prefix <- function(geo_string) {
 #' @importFrom utils download.file untar
 #' @keywords internal
 download_and_extract_raw_geo <- function(gse_accession, download_dir) {
+  # Validate inputs
+  if (!grepl("^GSE[0-9]+$", gse_accession)) {
+    stop("Invalid GSE accession format: ", gse_accession)
+  }
+  
+  download_dir <- ensure_dir(download_dir)
   raw_file_name <- paste0(gse_accession, "_RAW.tar")
   local_raw_file_path <- file.path(download_dir, raw_file_name)
 
   if (!file.exists(local_raw_file_path)) {
     remote_path_raw <- paste0("/geo/series/",
-                              get_geo_prefix(gse_accession),
-                              "/",
-                              gse_accession,
-                              "/suppl/",
-                              raw_file_name)
+                             get_geo_prefix(gse_accession),
+                             "/",
+                             gse_accession,
+                             "/suppl/",
+                             raw_file_name)
     url_ftp <- paste0("ftp://ftp.ncbi.nlm.nih.gov", remote_path_raw)
+    
+    # Validate URL before download
+    if (!grepl("^ftp://ftp\\.ncbi\\.nlm\\.nih\\.gov/geo/series/", url_ftp)) {
+      stop("Invalid GEO FTP URL format: ", url_ftp)
+    }
 
     message("Downloading ", raw_file_name, " from ", url_ftp)
     tryCatch({
