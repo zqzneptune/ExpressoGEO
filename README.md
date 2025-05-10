@@ -9,13 +9,17 @@
     if (!requireNamespace("remotes", quietly = TRUE))
         install.packages("remotes")
     ```
-1.  **Install `BiocManager`** :
+2.  **Install `BiocManager`** :
     ```R
     if (!requireNamespace("BiocManager", quietly = TRUE))
         install.packages("BiocManager")
     ```
-
-2.  **Install `ExpressoGEO`**
+3. **Install Bioconductor packages** :
+    ```R
+    BiocManager::install(c('GEOquery', 'Biobase', 'affyio', 'affy', 'oligo', 'AnnotationHub', 'ensembldb'))
+    ```
+    
+4.  **Install `ExpressoGEO`**
     ```R
     remotes::install_github("zqzneptune/ExpressoGEO")
     ```
